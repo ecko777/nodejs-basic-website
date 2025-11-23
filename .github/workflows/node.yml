@@ -1,5 +1,4 @@
-name: Node.js CI
-
+name: Node CI
 on:
   push:
     branches: [ main ]
@@ -11,29 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+        node-version: [18.x]
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Run linter
+        run: npm run lint
 
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "appevaluacion8"  # Cambiar al nombre de tu aplicación en Heroku
-          heroku_email: "ferbat.sor@gmail.com"
+      - name: Run tests
+        run: npm test -- --coverage
+        env:
+          CI: true
+
+      - name: Build (if needed)
+        run: npm run build || echo "no build step"
