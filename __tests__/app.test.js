@@ -4,6 +4,3 @@ describe('Configuración de Jest v3', () => {
     expect(1).toBe(1);
   });
 });
-
-
-
