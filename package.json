@@ -7,8 +7,8 @@
 "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "lint": "eslint . --ext .js --config .eslintrc.json",
-    "lint:fix": "eslint . --ext .js --fix --config .eslintrc.json",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
     "format": "prettier --write .",
     "test": "jest --coverage"
   },
