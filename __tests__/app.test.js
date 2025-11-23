@@ -1,7 +1,6 @@
-// app.test.js
-describe('Verificación de Pruebas', () => {
-  test('Debe poder ejecutar una prueba simple', () => {
-    // Esto asegura que Jest se haya cargado correctamente.
-    expect(1 + 1).toBe(2);
+describe('Configuración de Jest v2', () => {
+  // Una prueba simple para confirmar que Jest encuentra y ejecuta archivos en la carpeta 'tests'.
+  test('Verificar que 1 es igual a 1', () => {
+    expect(1).toBe(1);
   });
 });
