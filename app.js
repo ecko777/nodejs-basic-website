@@ -1,20 +1,18 @@
-const express = require('express');
+import express from "express";
+import pagesRoutes from "./src/routes/pages.routes.js";
+import path from "path";
+
 const app = express();
-const port = process.env.PORT || 3000; // Usará el puerto definido en la variable de entorno o 3000 por defecto
 
-// Directorio estático para los recursos HTML
-app.use(express.static('public'));
+// Middleware de archivos estáticos
+app.use(express.static(path.join(process.cwd(), "src/views")));
 
-// Rutas para las páginas HTML
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
+// Rutas
+app.use("/", pagesRoutes);
 
-app.get('/about', (req, res) => {
-  res.sendFile(__dirname + '/public/about.html');
-});
+// Puerto
+const PORT = process.env.PORT || 3000;
 
-// Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor funcionando en http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });

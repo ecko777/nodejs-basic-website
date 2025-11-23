@@ -1,6 +1,7 @@
 {
-  "name": "evaluacion8",
+  "name": "nodejs-basic-website",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "app.js", 
   "scripts": {
