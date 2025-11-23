@@ -2,22 +2,19 @@
   "env": {
     "node": true,
     "es2021": true,
-    // AÑADE ESTA LÍNEA: Indica a ESLint que reconozca las variables globales de Jest (describe, test, expect, etc.)
-    "jest": true 
+    "jest": true  
   },
   "extends": [
     "eslint:recommended", 
     "plugin:prettier/recommended",
-    // AÑADE ESTA LÍNEA: Usa las reglas recomendadas del plugin de Jest (opcional, pero recomendado)
     "plugin:jest/recommended" 
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  // Opcional: Si quieres añadir reglas específicas de Jest
   "plugins": [
-    "jest"
+    "jest" // Necesario para que funcione la extensión
   ],
   "rules": {
     "no-console": "off",
