@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    # Agrega permisos explícitos para asegurar que el GITHUB_TOKEN pueda acceder a todo lo que necesita.
+   
     permissions: 
       contents: read
       actions: write
@@ -26,15 +26,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          # REMOVIDA: La línea 'cache: 'npm'' para evitar el error 400 del servicio de caché.
 
       - name: Install dependencies
-        # 'npm ci' es mejor que 'npm install' en CI
+        
         run: npm ci 
 
       - name: Run linter
-        # CAMBIO CLAVE: Ejecutaremos el linting sobre el código fuente (src) y la carpeta de pruebas (__tests__)
-        run: npm run lint -- --ext .js src/ __tests__/
+       
+        run: npm run lint
 
       - name: Run tests
         run: npm test -- --coverage

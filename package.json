@@ -4,11 +4,11 @@
   "type": "module",
   "description": "",
   "main": "app.js",
-  "scripts": {
+"scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "lint": "eslint . --ext .js",
-    "lint:fix": "eslint . --ext .js --fix",
+    "lint": "eslint . --ext .js --config .eslintrc.json",
+    "lint:fix": "eslint . --ext .js --fix --config .eslintrc.json",
     "format": "prettier --write .",
     "test": "jest --coverage"
   },
