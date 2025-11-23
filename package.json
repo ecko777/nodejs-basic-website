@@ -4,7 +4,7 @@
   "type": "module",
   "description": "",
   "main": "app.js",
-"scripts": {
+  "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
     "lint": "eslint . --ext .js",
