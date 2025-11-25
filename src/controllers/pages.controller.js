@@ -6,7 +6,7 @@ import path from 'path';
  * @param {object} res - Objeto de respuesta.
  */
 export const renderHome = (req, res) => {
-    res.sendFile(path.join(process.cwd(), 'src/views/index.html'));
+  res.sendFile(path.join(process.cwd(), 'src/views/index.html'));
 };
 
 /**
@@ -15,7 +15,7 @@ export const renderHome = (req, res) => {
  * @param {object} res - Objeto de respuesta.
  */
 export const renderAbout = (req, res) => {
-    res.sendFile(path.join(process.cwd(), 'src/views/about.html'));
+  res.sendFile(path.join(process.cwd(), 'src/views/about.html'));
 };
 
 /**
@@ -24,7 +24,7 @@ export const renderAbout = (req, res) => {
  * @param {object} res - Objeto de respuesta.
  */
 export const pageNotFound = (req, res) => {
-    res.status(404).json({
-        message: "Ruta no encontrada"
-    });
+  res.status(404).json({
+    message: 'Ruta no encontrada',
+  });
 };

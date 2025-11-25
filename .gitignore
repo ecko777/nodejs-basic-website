@@ -1,2 +1,12 @@
-node_modules/
-npm-debug.log
+Dependencias
+
+/node_modules
+
+Logs
+
+npm-debug.log*
+.eslintcache
+
+Archivos de cobertura generados por Jest
+
+/coverage

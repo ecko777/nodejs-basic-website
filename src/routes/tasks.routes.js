@@ -1,12 +1,6 @@
 import { Router } from 'express';
 
-
-import { 
-    getTasks, 
-    createTask, 
-    updateTask, 
-    deleteTask 
-} from '../controllers/tasks.controller.js';
+import { getTasks, createTask, updateTask, deleteTask } from '../controllers/tasks.controller.js';
 
 const router = Router();
 
@@ -21,6 +15,5 @@ router.put('/:id', updateTask);
 
 // DELETE /api/tasks/:id -> Eliminar una tarea por ID
 router.delete('/:id', deleteTask);
-
 
 export default router;

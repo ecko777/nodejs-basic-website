@@ -1,94 +1,75 @@
-export const mockDatabase = [];
+let mockDatabase = [
+  // Cambiado de 'const' a 'let' para resolver el error de análisis 'already been declared'
+  { id: 1, title: 'Comprar leche', description: 'Leche entera y deslactosada', completed: false },
+  { id: 2, title: 'Pagar servicios', description: 'Electricidad y agua', completed: true },
+  { id: 3, title: 'Ejercicio diario', description: 'Rutina de 30 minutos', completed: false },
+];
+let nextId = mockDatabase.length + 1;
 
 /**
  * Obtiene todas las tareas.
- * @param {object} req - Objeto de solicitud.
- * @param {object} res - Objeto de respuesta.
  */
-export const getTasks = (req, res) => {
-    res.status(200).json(mockDatabase);
+const getTasks = (req, res) => {
+  return res.json(mockDatabase); // Añadido 'return' por consistencia (aunque getTasks no tenía la advertencia)
 };
-
 
 /**
  * Crea una nueva tarea.
- * @param {object} req - Objeto de solicitud.
- * @param {object} res - Objeto de respuesta.
  */
-export const createTask = (req, res) => {
-    const { title, description } = req.body;
-    
-    if (!title || !description) {
-        return res.status(400).json({ message: 'Título y descripción son requeridos.' });
-    }
-    
-    // Creación del nuevo objeto tarea
-    const newTask = { 
-        id: Date.now(), // ID simple para propósitos de mock
-        title, 
-        description, 
-        completed: false 
-    };
-    
-    // Almacenamiento
-    mockDatabase.push(newTask);
-    
-    // Respuesta exitosa (201 Created)
-    res.status(201).json(newTask);
+const createTask = (req, res) => {
+  const { title, description } = req.body;
+
+  if (!title) {
+    // CORREGIDO: Usar 'return' para salir de la función inmediatamente después del error.
+    return res.status(400).json({ message: 'El título es obligatorio.' });
+  }
+
+  const newTask = {
+    id: nextId++,
+    title,
+    description: description || '',
+    completed: false,
+  };
+
+  mockDatabase.push(newTask);
+  // CORREGIDO: Añadido 'return' al camino de éxito
+  return res.status(201).json(newTask);
 };
 
 /**
- * Actualiza una tarea por su ID.
- * @param {object} req - Objeto de solicitud.
- * @param {object} res - Objeto de respuesta.
+ * Actualiza una tarea por ID.
  */
-export const updateTask = (req, res) => {
-    // Obtenemos el ID de los parámetros de la URL
-    const id = parseInt(req.params.id);
-    
-    // Buscamos el índice de la tarea
-    const taskIndex = mockDatabase.findIndex(task => task.id === id);
+const updateTask = (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const updates = req.body;
+  const index = mockDatabase.findIndex((task) => task.id === id);
 
-    // Si la tarea no se encuentra
-    if (taskIndex === -1) {
-        return res.status(404).json({ message: 'Tarea no encontrada.' });
-    }
+  if (index === -1) {
+    // CORREGIDO: Usar 'return' para salir de la función inmediatamente después del error.
+    return res.status(404).json({ message: 'Tarea no encontrada' });
+  }
 
-    // Obtenemos los datos a actualizar del cuerpo de la petición
-    const { title, description, completed } = req.body;
-
-    // Actualizamos la tarea en la base de datos simulada
-    mockDatabase[taskIndex] = {
-        ...mockDatabase[taskIndex], // Mantenemos las propiedades existentes
-        title: title !== undefined ? title : mockDatabase[taskIndex].title,
-        description: description !== undefined ? description : mockDatabase[taskIndex].description,
-        completed: completed !== undefined ? completed : mockDatabase[taskIndex].completed
-    };
-
-    // Devolvemos la tarea actualizada (200 OK)
-    res.status(200).json(mockDatabase[taskIndex]);
+  const updatedTask = { ...mockDatabase[index], ...updates };
+  mockDatabase[index] = updatedTask;
+  // CORREGIDO: Añadido 'return' al camino de éxito
+  return res.json(updatedTask);
 };
 
 /**
- * Elimina una tarea por su ID.
- * @param {object} req - Objeto de solicitud.
- * @param {object} res - Objeto de respuesta.
+ * Elimina una tarea por ID.
  */
-export const deleteTask = (req, res) => {
-    // Obtenemos el ID de los parámetros de la URL
-    const id = parseInt(req.params.id);
+const deleteTask = (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const index = mockDatabase.findIndex((task) => task.id === id);
 
-    // Buscamos el índice de la tarea
-    const taskIndex = mockDatabase.findIndex(task => task.id === id);
+  if (index === -1) {
+    // CORREGIDO: Usar 'return' para salir de la función inmediatamente después del error.
+    return res.status(404).json({ message: 'Tarea no encontrada' });
+  }
 
-    // Si la tarea no se encuentra
-    if (taskIndex === -1) {
-        return res.status(404).json({ message: 'Tarea no encontrada para eliminar.' });
-    }
-
-    // Eliminamos la tarea usando splice
-    mockDatabase.splice(taskIndex, 1);
-
-    // Respuesta exitosa sin contenido (204 No Content)
-    res.status(204).send();
+  mockDatabase.splice(index, 1);
+  // CORREGIDO: Añadido 'return' al camino de éxito
+  return res.status(204).send(); // 204 No Content
 };
+
+export { getTasks, createTask, updateTask, deleteTask, mockDatabase };
