@@ -29,7 +29,7 @@ describe('Controlador Unitario de Tareas (tasks.controller.js)', () => {
   // Limpiamos la base de datos simulada antes de cada prueba
   beforeEach(() => {
     // NOTA: Usamos length = 0 para vaciar el array sin perder la referencia
-    mockDatabase.length = 0; 
+    mockDatabase.length = 0;
   });
 
   // --- Test: Leer Tareas (getTasks) ---
@@ -88,7 +88,9 @@ describe('Controlador Unitario de Tareas (tasks.controller.js)', () => {
       expect(res.status).toHaveBeenCalledWith(400);
       expect(mockDatabase.length).toBe(0);
       // El controlador ahora usa 'El título y la descripción son requeridos.'
-      expect(res.json).toHaveBeenCalledWith({ message: 'El título y la descripción son requeridos.' });
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'El título y la descripción son requeridos.',
+      });
     });
   });
 
@@ -152,7 +154,7 @@ describe('Controlador Unitario de Tareas (tasks.controller.js)', () => {
 
       expect(res.status).toHaveBeenCalledWith(404);
       // CORREGIDO: Mensaje simplificado para coincidir con el controlador
-      expect(res.json).toHaveBeenCalledWith({ message: 'Tarea no encontrada' }); 
+      expect(res.json).toHaveBeenCalledWith({ message: 'Tarea no encontrada' });
       // Asegura que la base de datos no haya cambiado
       expect(mockDatabase.length).toBe(1);
     });
@@ -169,7 +171,7 @@ describe('Controlador Unitario de Tareas (tasks.controller.js)', () => {
 
       expect(res.status).toHaveBeenCalledWith(404);
       // CORREGIDO: Mensaje simplificado para coincidir con el controlador
-      expect(res.json).toHaveBeenCalledWith({ message: 'Tarea no encontrada' }); 
+      expect(res.json).toHaveBeenCalledWith({ message: 'Tarea no encontrada' });
     });
   });
 
@@ -218,12 +220,12 @@ describe('Controlador Unitario de Tareas (tasks.controller.js)', () => {
 
       expect(res.status).toHaveBeenCalledWith(404);
       // CORREGIDO: Mensaje simplificado para coincidir con el controlador
-      expect(res.json).toHaveBeenCalledWith({ message: 'Tarea no encontrada' }); 
+      expect(res.json).toHaveBeenCalledWith({ message: 'Tarea no encontrada' });
 
       // Asegura que la base de datos no haya cambiado
       expect(mockDatabase.length).toBe(2);
     });
-    
+
     // Test para cubrir la rama de ID inválido en deleteTask y asegurar el 100% Branch
     test('Debe devolver 404 si el ID de eliminación no es un número válido (NaN)', () => {
       const req = mockRequest(
@@ -238,7 +240,7 @@ describe('Controlador Unitario de Tareas (tasks.controller.js)', () => {
 
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({ message: 'Tarea no encontrada' });
-      
+
       // Asegura que la base de datos no haya cambiado
       expect(mockDatabase.length).toBe(2);
     });
